@@ -1,0 +1,53 @@
+<form [formGroup]="form">
+    <div>
+        <label for="TaskName"><b>TaskName</b></label>
+        <input type="text" placeholder="Enter TaskName" name="Tname">
+
+    </div>
+    <legend>Address</legend>
+    <button (click)="changeFlagon()"><img src="../../../assets/google-maps.png" alt="map" width="100px" height="100px">
+    </button>
+
+
+
+    <div class="form-group">
+        <label>Enter address</label>
+        <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+            placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+            #search value={{address}}>
+    </div>
+    
+    <div>
+        <label for="Street"><b>Sreet</b></label>
+        <input type="text" placeholder="Enter Street" name="street" formControlName="street" value={{st}}>
+
+    </div>
+    <div>
+        <label for="Number"><b>Number</b></label>
+        <input type="number" placeholder="Enter Number" name="number" formControlName="number" value={{num}}>
+
+    </div>
+    <div>
+        <label for="City"><b>City</b></label>
+        <input type="text" placeholder="Enter City" name="city" formControlName="city" value={{ci}} >
+
+    </div>
+    <div>
+        <label for="Land"><b>Country</b></label>
+        <input type="text" placeholder="Enter Country" name="Country" formControlName="Country" value={{cou}}>
+
+    </div>
+    <div>
+        <label for="desc"><b>descrubtion the task</b></label>
+        <input type="text" placeholder="descrubtion" name="descrubtion" formControlName="descrubtion" >
+
+    </div>
+    
+    <input type="submit" value="Add">
+</form>
+
+<agm-map *ngIf="flagon" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" >
+    <agm-marker [markerDraggable]="true" [latitude]="latitude" [longitude]="longitude"
+        (dragEnd)="onChoseLouation($event)">
+    </agm-marker>
+</agm-map>
