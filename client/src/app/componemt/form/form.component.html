@@ -1,4 +1,4 @@
-<form [formGroup]="form" class="modal-content animate" action="/action_page.php" method="post">
+<form [formGroup]="form" class="modal-content animate" (submit)="login()">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal"
       routerLink="/">&times;</span>

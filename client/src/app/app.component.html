@@ -300,9 +300,10 @@
 
 
 <div *ngIf="!flag">
-  <button class="button1" class="rainbow rainbow-1" id="theonebutton" ><a routerLink='/app-newTask' click="flo()"> משימה חדשה </a></button>
-  <button class="button2" class="rainbow rainbow-1" id="thetwobutton" ><a routerLink="/app-all-tasks"> צפיה במשימות </a></button>
-  <button class="button3" class="rainbow rainbow-1"id="thetreebutton" ><a routerLink='/app-form' routerLinkActive="active">   משתמש חדש/רשום</a></button>  
+  <button class="button1"  *ngIf="isLoggedIn"class="rainbow rainbow-1" id="theonebutton" ><a routerLink='/app-newTask' click="flo()"> משימה חדשה </a></button>
+  <button class="button2" *ngIf="isLoggedIn" class="rainbow rainbow-1" id="thetwobutton" ><a routerLink="/app-all-tasks"> צפיה במשימות </a></button>
+  <button class="button3" *ngIf="!isLoggedIn" class="rainbow rainbow-1"id="thetreebutton" ><a routerLink='/app-form' routerLinkActive="active">   משתמש חדש/רשום</a></button>  
+  <button class="button3" *ngIf="isLoggedIn" class="rainbow rainbow-1"id="thetreebutton" (click)="userService.logout()" >יציאה</button>  
 </div>
 
 <app-open *ngIf="flag"></app-open>

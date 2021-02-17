@@ -1,7 +1,7 @@
-<form [formGroup]="form">
+<form [formGroup]="form" (submit)="addTask()">
     <div>
         <label for="TaskName"><b>TaskName</b></label>
-        <input type="text" placeholder="Enter TaskName" name="Tname">
+        <input type="text" formControlName="name" placeholder="Enter TaskName" name="Tname">
 
     </div>
     <legend>Address</legend>
@@ -42,8 +42,17 @@
         <input type="text" placeholder="descrubtion" name="descrubtion" formControlName="descrubtion" >
 
     </div>
+
+   <label for=""><b> select an audio:</b></label>
+    <div *ngFor="let audio of audios">
+        <label>
+            <input type="radio" [value]="audio" (blur)="currentAudio.pause()" formControlName="audio">
+              <a style="cursor: pointer;" (click)="playAudio(audio)">{{audio}}</a>
+          </label>
+       
+    </div>
     
-    <input type="submit" value="Add">
+    <input type="submit">
 </form>
 
 <agm-map *ngIf="flagon" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" >

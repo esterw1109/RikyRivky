@@ -1,26 +1,70 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { from, Observable } from 'rxjs';
-import {User} from '../../../../server1/schemas/User';
+import { from, Observable, Subject } from 'rxjs';
+import { User } from '../../../../server1/schemas/User';
+import { map } from 'rxjs/operators';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-  public user: User;
   private url = 'http://localhost:3000/user';
+  private logger = new Subject<boolean>();
+  loggedIn = false;
 
   constructor(private http: HttpClient) {
-    this.user = JSON.parse(localStorage.getItem('currentUser'));
-   }
-
-   getUsers():Observable<User[]> {
-     return this.http.get<User[]>(`${this.url}/find`);
-   }
-   getUser(id):Observable<User> {
-    return this.http.get<User>(`${this.url}/find/${id}`);
-  }
-  creatUser(user:User):Observable<User> {
-    return this.http.post<User>(this.url,user);
+    this.setLogin();
   }
 
+  getCurrentUser(): User {
+    const storageUser = localStorage.getItem('currentUser');
+    return storageUser ? JSON.parse(storageUser) : null;
+  }
+
+  setLogin() {
+    if (!this.getCurrentUser()) {
+      return;
+    }
+    this.loggedIn = true;
+    this.logger.next(this.loggedIn);
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.logger.asObservable();
+  }
+
+  logout() {
+    this.loggedIn = false;
+    this.logger.next(this.loggedIn);
+  }
+
+  login(user: User): Observable<User> {
+    return this.http.post<User>(`${this.url}/login`, user).pipe(
+      map((user: User) => {
+        localStorage.setItem(
+          'currentUser',
+          JSON.stringify({ ...user, tasks: [] })
+        );
+        this.setLogin();
+        return user;
+      })
+    );
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.url}/find`);
+  }
+
+  createUser(user: User): Observable<User> {
+    return this.http.post<User>(this.url, user).pipe(
+      map((user) => {
+        localStorage.setItem(
+          'currentUser',
+          JSON.stringify({ ...user, tasks: [] })
+        );
+        this.setLogin();
+        return user;
+      })
+    );
+  }
 }

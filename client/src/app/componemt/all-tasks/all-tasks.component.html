@@ -1,31 +1,9 @@
 <ul class="tilesWrap" >
-	<li>
-		<h2>01</h2>
-		<h3>Title 1</h3>
-		<p>
-			
-		</p>
-		<button>Read more</button>
-	</li>
-	<li>
-		<h2>02</h2>
-		<h3>Title 2</h3>
-		<p>
-		
-		</p>
-		<button>Read more</button>
-	</li>
-	<li>
-		<h2>03</h2>
-		<h3>Title 3</h3>
-		<p>
-			
-		</p>
-		<button>Read more</button>
-	</li>
-	<li>
-		<h2>04</h2>
-		<h3>Title 4</h3>
+
+	<li *ngFor="let task of tasks; let i = index">
+		<h2>{{i +1}}</h2>
+		<h3>{{task.name}}</h3>
+		<h5>{{task.audio}}</h5>
 		<p>
 			
 		</p>

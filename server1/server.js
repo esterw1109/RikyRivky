@@ -3,10 +3,11 @@ const  cors = require('cors')
 const mongoose = require('mongoose');
 let express=require ('express')
 const userRouter = require('./routes/user');
+const taskRouter = require('./routes/task');
 const bodyParser= require('body-parser');
 const { json } = require('express');
-
- mongoose.connect('mongodb://localhost:27017/appMap', {useNewUrlParser: true});
+ 
+ mongoose.connect('mongodb://localhost:27017/appMap', {useNewUrlParser: true, useUnifiedTopology: true });
  const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 // })
 
 app.use('/user', userRouter);
+app.use('/task', taskRouter);
 
 app.listen(3000);
 // http.createServer(function(req,res){
@@ -29,3 +31,4 @@ app.listen(3000);
 // res.write('hhhhhhh');
 // res.end();
 // }).listen(3000)
+
