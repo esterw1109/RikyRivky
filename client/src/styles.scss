@@ -1,1 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
+// @import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+input,
+textarea {
+  margin-bottom: 24px !important;
+  background-color: rgb(233 30 99 / 7%) !important  ;
+  color: #fae4ec !important;
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 4px 6px 4px 4px;
+}
+.mat-radio-label-content {
+  color: rgb(196, 195, 195) !important;
+}
+
+.err {
+  color: red;
+  margin-top: -20px;
+  display: block;
+  margin-bottom: 15px;
+}
+
+b {
+  font-weight: 500 !important;
+}
+
+img.avatar {
+  width: 17%;
+  border-radius: 50%;
+}
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+button {
+  background-color: #f48fb1;
+  color: rgba(19, 17, 17, 0.815);
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  border-radius: 3px;
+}

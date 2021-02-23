@@ -1,3 +1,70 @@
-agm-map{
-    height: 500px;
+agm-map {
+  height: 500px;
+}
+
+label {
+  width: 100px;
+}
+
+.container {
+  border: 1px solid hsla(0, 0%, 100%, 0.2);
+  border-radius: 4px;
+  margin: 24px 5%;
+  padding: 3%;
+}
+
+.field {
+  display: flex;
+  justify-content: space-between;
+  max-width: 300px;
+}
+.btn-map {
+  max-width: 70%;
+}
+
+.radio-btn {
+  display: flex;
+}
+
+.field-alone {
+  display: flex;
+  justify-content: space-between;
+  max-width: 400px;
+  input,
+  textarea {
+    width: 285px !important;
+  }
+}
+
+.address {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+
+.ad-btn {
+  text-align: center;
+}
+
+.rad-f {
+  padding-right: 20px;
+}
+
+label.al-t {
+  min-width: max-content;
+  padding-right: 10px;
+  width: 91px;
+}
+@media screen and (max-width: 500px) {
+  .radio-btn {
+    display: unset;
+  }
+  label {
+    padding-right: 10px;
+  }
+  .address {
+    grid-template-columns: 1fr;
+    column-gap: 0%;
+    row-gap: 20px;
+  }
 }

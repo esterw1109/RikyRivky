@@ -1,46 +1,35 @@
 <form [formGroup]="form" class="modal-content animate" (submit)="login()">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal"
+  <div class="imgcontainer">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal"
       routerLink="/">&times;</span>
-      <img src="../../../assets/user.png" alt="Avatar" class="avatar">
+    <img src="../../../assets/user.png" alt="Avatar" class="avatar">
+  </div>
+
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="uname" formControlName="name">
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" formControlName="password">
+
+    <button type="submit">Login</button>
+    <label>
+      <mat-checkbox class="example-margin" formControlName="remember">Remember me</mat-checkbox>
+    </label>
+    <div class="d-flex">
+      <span class="links"> <span routerLink='/app-newUser'> New user </span> </span>
+      <span class="links"> <span routerLink='/app-forgetPassword'> Forgot password? </span></span>
     </div>
+  </div>
+</form>
+<script>
+  // Get the modal
+  var modal = document.getElementById('id01');
 
-    <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" formControlName="name">
-
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" formControlName="password">
-        
-      <button type="submit">Login</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
-    </div>
-
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"
-      routerLink='/'>Cancel</button>
-    
-      <span class="psw">Forgot <a href="#" routerLink='/app-forgetPassword'>password?</a></span>
-     &nbsp;     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     &nbsp;     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-      <span class="psw"> <a href="#" routerLink='/app-newUser'>new user</a>
-      </span>
-
-    </div>
-  </form>
-  <script>
-    // Get the modal
-    var modal = document.getElementById('id01');
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
     }
+  }
 </script>

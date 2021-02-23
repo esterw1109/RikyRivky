@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from 'src/app/degem/degem';
 import { UserService } from 'src/app/services/user.service';
 
@@ -11,10 +12,11 @@ import { UserService } from 'src/app/services/user.service';
 export class FormComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
+      remember: new FormControl(true),
     });
   }
 
@@ -22,12 +24,10 @@ export class FormComponent implements OnInit {
     console.log('init');
   }
 
-  createdUser: User;
   login(): void {
     this.userService.login(this.form.value).subscribe(
       (response) => {
-        alert('user logged succesfuly');
-        this.createdUser = response;
+        this.router.navigateByUrl('app-all-tasks');
       },
       (err) => console.log(err)
     );

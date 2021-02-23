@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-new-task',
   templateUrl: './new-task.component.html',
@@ -25,7 +26,7 @@ export class NewTaskComponent implements OnInit {
   cou: any;
   arr: any;
 
-  audios = ['הילדים הללו.mp3', 'תן לי אור.mp3', 'שמחה.mp3'];
+  audios = ['one.mp3', 'two.mp3', 'three.mp3'];
 
   flagon = false;
   private geoCoder;
@@ -33,12 +34,17 @@ export class NewTaskComponent implements OnInit {
   public currentUrl: string = undefined;
   @ViewChild('search')
   public searchElementRef: ElementRef;
+  isUpdate: boolean;
 
   constructor(
+    private router: Router,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private taskService: TaskService
-  ) {
+    private taskService: TaskService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
@@ -46,10 +52,22 @@ export class NewTaskComponent implements OnInit {
       number: new FormControl('', [Validators.required]),
       desc: new FormControl(''),
       audio: new FormControl(''),
+      country: new FormControl(''),
     });
-  }
 
-  ngOnInit(): void {
+    const taskId = this.route.snapshot.paramMap.get('id');
+    if (taskId) {
+      this.isUpdate = true;
+      this.taskService.findTask(taskId).subscribe((res) => {
+        for (const key in this.form.value) {
+          this.form.setValue({
+            ...this.form.value,
+            [key]: res[key] ?? '',
+          });
+        }
+      });
+    }
+
     if (navigator) {
       navigator.geolocation.getCurrentPosition((pos) => {
         this.longitude = +pos.coords.longitude;
@@ -117,7 +135,17 @@ export class NewTaskComponent implements OnInit {
   }
 
   addTask() {
-    this.taskService.createTask(this.form.value).subscribe((res: any) => {});
+    if (this.isUpdate) {
+      this.taskService
+        .updateTask(this.route.snapshot.params.id, this.form.value)
+        .subscribe((res: any) => {
+          this.router.navigateByUrl('app-all-tasks');
+        });
+    } else {
+      this.taskService.createTask(this.form.value).subscribe((res: any) => {
+        this.router.navigateByUrl('app-all-tasks');
+      });
+    }
   }
 
   currentAudio: HTMLAudioElement;

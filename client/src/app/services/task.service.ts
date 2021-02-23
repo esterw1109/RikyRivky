@@ -24,12 +24,26 @@ export class TaskService {
       .pipe(map((res: any) => res.tasks));
   }
 
-  findTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(`${this.url}/task`, task);
+  findTask(id: string): Observable<Task> {
+    const user = this.userService.getCurrentUser();
+    return this.http.get<Task>(`${this.url}/user/${user._id}/find/${id}`);
   }
 
   createTask(task: Task): Observable<Task> {
     const user = this.userService.getCurrentUser();
     return this.http.post<Task>(`${this.url}/user/${user._id}`, task);
+  }
+
+  updateTask(taskId: string, task: Task): Observable<Task> {
+    const user = this.userService.getCurrentUser();
+    return this.http.post<Task>(
+      `${this.url}/user/${user._id}/update/${taskId}`,
+      task
+    );
+  }
+
+  removeTask(id: string) {
+    const user = this.userService.getCurrentUser();
+    return this.http.get<Task>(`${this.url}/user/${user._id}/remove/${id}`);
   }
 }

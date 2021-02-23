@@ -1,62 +1,75 @@
-<form [formGroup]="form" (submit)="addTask()">
-    <div>
-        <label for="TaskName"><b>TaskName</b></label>
-        <input type="text" formControlName="name" placeholder="Enter TaskName" name="Tname">
+<form [formGroup]="form" class="modal-content animate" (submit)="addTask()">
+    <div class="container">
+        <div class="form-group field-alone">
+            <label for="TaskName"><b>Task Name</b></label>
+            <input type="text" formControlName="name" placeholder="Enter Task Name" name="Tname">
+        </div>
+        <div class="form-group field-alone">
+            <label for="desc"><b>Description</b></label>
+            <textarea rows="3" type="text" placeholder="Description" formControlName="desc"></textarea>
+        </div>
+
+        <div style="display: flex; align-items: center;">
+            <label class="al-t" for=""><b>Alarm Ring:</b></label>
+            <mat-radio-group class="radio-btn" formControlName="audio">
+                <mat-radio-button class="rad-f" appClickOutside (clickOutside)="currentAudio?.pause()"
+                    (change)="playAudio(audio)" *ngFor="let audio of audios" [value]="audio">
+                    {{audio}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <div class="address">
+            <div class="ad-btn">
+                <legend><b>Address</b></legend>
+                <button type="button" class="btn-map" (click)="changeFlagon()"><img
+                        src="../../../assets/google-maps.png" alt="map" width="100px" height="100px">
+                </button>
+            </div>
+            <div>
+                <div class="form-group field">
+                    <label><b> Enter address</b></label>
+                    <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+                        placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off"
+                        type="text" #search value={{address}}>
+                </div>
+
+                <div class="form-group field">
+                    <label for="Street"><b>Sreet</b></label>
+                    <input type="text" placeholder="Enter Street" name="street" formControlName="street" value={{st}}>
+
+                </div>
+                <div class="form-group field">
+                    <label for="Number"><b>Number</b></label>
+                    <input type="number" placeholder="Enter Number" name="number" formControlName="number"
+                        value={{num}}>
+
+                </div>
+                <div class="form-group field">
+                    <label for="City"><b>City</b></label>
+                    <input type="text" placeholder="Enter City" name="city" formControlName="city" value={{ci}}>
+
+                </div>
+                <div class="form-group field">
+                    <label for="Land"><b>country</b></label>
+                    <input type="text" placeholder="Enter Country" name="Country" formControlName="country"
+                        value={{cou}}>
+
+                </div>
+            </div>
+        </div>
+        <agm-map *ngIf="flagon" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+            <agm-marker [markerDraggable]="true" [latitude]="latitude" [longitude]="longitude"
+                (dragEnd)="onChoseLouation($event)">
+            </agm-marker>
+        </agm-map>
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+
+        <button type="submit">Submit</button>
 
     </div>
-    <legend>Address</legend>
-    <button (click)="changeFlagon()"><img src="../../../assets/google-maps.png" alt="map" width="100px" height="100px">
-    </button>
-
-
-
-    <div class="form-group">
-        <label>Enter address</label>
-        <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
-            placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
-            #search value={{address}}>
-    </div>
-    
-    <div>
-        <label for="Street"><b>Sreet</b></label>
-        <input type="text" placeholder="Enter Street" name="street" formControlName="street" value={{st}}>
-
-    </div>
-    <div>
-        <label for="Number"><b>Number</b></label>
-        <input type="number" placeholder="Enter Number" name="number" formControlName="number" value={{num}}>
-
-    </div>
-    <div>
-        <label for="City"><b>City</b></label>
-        <input type="text" placeholder="Enter City" name="city" formControlName="city" value={{ci}} >
-
-    </div>
-    <div>
-        <label for="Land"><b>Country</b></label>
-        <input type="text" placeholder="Enter Country" name="Country" formControlName="Country" value={{cou}}>
-
-    </div>
-    <div>
-        <label for="desc"><b>descrubtion the task</b></label>
-        <input type="text" placeholder="descrubtion" name="descrubtion" formControlName="descrubtion" >
-
-    </div>
-
-   <label for=""><b> select an audio:</b></label>
-    <div *ngFor="let audio of audios">
-        <label>
-            <input type="radio" [value]="audio" (blur)="currentAudio.pause()" formControlName="audio">
-              <a style="cursor: pointer;" (click)="playAudio(audio)">{{audio}}</a>
-          </label>
-       
-    </div>
-    
-    <input type="submit">
 </form>
-
-<agm-map *ngIf="flagon" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" >
-    <agm-marker [markerDraggable]="true" [latitude]="latitude" [longitude]="longitude"
-        (dragEnd)="onChoseLouation($event)">
-    </agm-marker>
-</agm-map>

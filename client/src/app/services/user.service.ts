@@ -34,6 +34,7 @@ export class UserService {
   }
 
   logout() {
+    localStorage.removeItem('currentUser');
     this.loggedIn = false;
     this.logger.next(this.loggedIn);
   }
@@ -53,6 +54,10 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.url}/find`);
+  }
+
+  forgotPassword(email: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.url}/forgotPassword/${email}`);
   }
 
   createUser(user: User): Observable<User> {

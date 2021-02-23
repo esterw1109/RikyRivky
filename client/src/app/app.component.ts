@@ -38,13 +38,5 @@ export class AppComponent {
     setTimeout(() => {
       this.flag = false;
     }, 2000);
-    this.isLoggedIn = this.userService.loggedIn;
-    this.userService
-      .isLoggedIn()
-      .subscribe((isLogged) => (this.isLoggedIn = isLogged));
-  }
-
-  changeFlag() {
-    this.flag = true;
   }
 }

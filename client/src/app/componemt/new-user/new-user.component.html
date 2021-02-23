@@ -1,46 +1,57 @@
-<form class="modal-content animate" action="createUser()" method="post" [formGroup]="addUser" >
-    <div class="imgcontainer">
+<form #f="ngForm" class="modal-content animate" [formGroup]="addUser" (ngSubmit)="creatUser()">
+  <div class="imgcontainer">
     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal"
-    routerLink="/">&times;</span>
+      routerLink="/">&times;</span>
     <img src="../../../assets/user.png" alt="Avatar" class="avatar">
   </div>
 
   <div class="container">
+
     <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" formControlName="name" >
+    <input type="text" placeholder="Enter Username" name="uname" formControlName="name">
+    <ng-container *ngIf="f.submitted">
+      <span class="err" *ngIf="addUser.get('name').hasError('required')">Name is required</span>
+    </ng-container>
 
-    <label for="psw"><b>Password</b></label> 
+    <label for="uname"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" formControlName="email">
+    <ng-container *ngIf="f.submitted">
+      <span class="err" *ngIf="addUser.get('email').hasError('required')">Email is required</span>
+      <span class="err" *ngIf="addUser.get('email').hasError('email')">Email is invalid</span>
+    </ng-container>
+
+    <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="psw" formControlName="password">
+    <ng-container *ngIf="f.submitted">
+      <span class="err" *ngIf="addUser.get('password').hasError('required')">Password is required</span>
+    </ng-container>
 
-    <label for="psw"><b>Rpeat password</b></label>
-    <input type="password" placeholder="Rpeat Password" name="repsw" required>
-      
-    <button type="submit" (click)="creatUser()">Register</button>
+    <label for="psw"><b>Repeat password</b></label>
+    <input type="password" placeholder="Repeat Password" formControlName="confirmPassword" name="repsw" required>
+    <ng-container *ngIf="f.submitted">
+      <span class="err" *ngIf="addUser.get('confirmPassword').hasError('required')">Confirm Password is required</span>
+      <span class="err" *ngIf="addUser.get('confirmPassword').hasError('mustMatch')">Passwords must match</span>
+    </ng-container>
+
+    <button type="submit">Register</button>
     <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
+      <mat-checkbox type="checkbox" checked="remember" name="remember"> Remember me</mat-checkbox>
     </label>
+    <div class="d-flex">
+      <span class="links"> <span routerLink='/app-form'> Already registered? </span> </span>
+      <span class="links"> <span routerLink='/app-forgetPassword'> Forgot password? </span></span>
+    </div>
   </div>
 
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"
-    routerLink='/'>Cancel</button>
-  
-    <span class="psw">Forgot <a href="#" routerLink='/app-forgetPassword'>password?</a></span>
-
-
-    <span class="psw"> <a href="#" routerLink='/app-newUser'>new user</a>
-    </span>
-
-  </div>
 </form>
 <script>
   // Get the modal
   var modal = document.getElementById('id01');
-  
+
   // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
   }
 </script>
